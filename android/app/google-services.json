@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "289504224690",
+    "project_id": "authentication-7e197",
+    "storage_bucket": "authentication-7e197.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289504224690:android:edd96031fd0e22c573b0ab",
+        "android_client_info": {
+          "package_name": "com.example.ammu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289504224690-cki47ks9vr6d7l6nc2f8gquals6jnsqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGRVt5oPFv6AqKdWLjSYhFD6KvqD6oe7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289504224690-cki47ks9vr6d7l6nc2f8gquals6jnsqr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "289504224690-n8uf78k92dfe8a1f7arc6qjlqi6358kf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ammu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
