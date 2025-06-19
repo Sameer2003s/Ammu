@@ -68,7 +68,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
       try {
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(_currentUser!.uid)
+            .doc(_currentUser.uid)
             .collection('students')
             .doc(studentId)
             .delete();
@@ -113,7 +113,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
-            .doc(_currentUser!.uid)
+            .doc(_currentUser.uid)
             .collection('students')
             .orderBy('createdAt', descending: true)
             .snapshots(),
