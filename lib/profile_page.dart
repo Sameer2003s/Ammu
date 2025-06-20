@@ -20,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     if (_currentUser != null) {
-      _nameController.text = _currentUser!.displayName ?? '';
+      _nameController.text = _currentUser.displayName ?? '';
     }
   }
 
@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
               content: Text('Profile updated successfully!'),
               backgroundColor: Colors.green),
         );
-        await _currentUser!.reload();
+        await _currentUser.reload();
         // Manually update the state to reflect the change immediately
         setState(() {});
       }

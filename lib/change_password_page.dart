@@ -42,10 +42,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         email: _currentUser!.email!,
         password: _currentPasswordController.text,
       );
-      await _currentUser!.reauthenticateWithCredential(cred);
+      await _currentUser.reauthenticateWithCredential(cred);
 
       // If re-authentication is successful, update the password
-      await _currentUser!.updatePassword(_newPasswordController.text);
+      await _currentUser.updatePassword(_newPasswordController.text);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
