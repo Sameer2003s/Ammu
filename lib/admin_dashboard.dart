@@ -2,10 +2,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+// --- Import Existing and New Pages ---
 import 'sms.dart'; 
 import 'manage_students_page.dart';
+import 'user_management_page.dart'; // New
+import 'system_analytics_page.dart'; // New
+import 'broadcast_message_page.dart'; // New
+import 'admin_settings_page.dart'; // New
+import 'login.dart'; // For logout navigation
 
-// --- Data Models for the Dashboard ---
+// --- Data Models for the Dashboard (Unchanged) ---
 
 class StudentLocation {
   final String name;
@@ -43,7 +51,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
   int _bottomNavIndex = 0;
   bool _isMonthly = true;
 
-  // --- Mock Data ---
+  // --- Mock Data (Unchanged) ---
   final List<StudentLocation> _studentLocations = [
     StudentLocation(
         name: 'Sara',
@@ -78,6 +86,18 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
     setState(() => _bottomNavIndex = index);
     if (index == 1) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => const SmsScreen()));
+    }
+  }
+
+  /// MODIFICATION: Handles logging out the user.
+  Future<void> _logout() async {
+    await FirebaseAuth.instance.signOut();
+    if (mounted) {
+      // Pushes the login page and removes all routes behind it.
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+        (Route<dynamic> route) => false,
+      );
     }
   }
 
@@ -158,6 +178,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
       );
   }
 
+  /// MODIFICATION: Updated Drawer with navigation logic.
   Widget _buildDrawer() {
     return Drawer(
       child: ListView(
@@ -178,6 +199,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
             title: const Text('User Management'),
             onTap: () {
               Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const UserManagementPage()));
             },
           ),
           ListTile(
@@ -193,6 +215,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
             title: const Text('System Analytics'),
             onTap: () {
               Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SystemAnalyticsPage()));
             },
           ),
           ListTile(
@@ -200,6 +223,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
             title: const Text('Broadcast Message'),
             onTap: () {
               Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const BroadcastMessagePage()));
             },
           ),
           const Divider(),
@@ -208,14 +232,13 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
             title: const Text('Settings'),
             onTap: () {
               Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminSettingsPage()));
             },
           ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: _logout, // Call the logout method
           ),
         ],
       ),

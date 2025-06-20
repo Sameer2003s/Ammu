@@ -17,6 +17,8 @@ import 'subscription.dart';
 import 'settings_page.dart';
 import 'admin_dashboard.dart';
 import 'login.dart';
+import 'profile_page.dart';
+import 'devices_page.dart'; // Import the new devices page
 
 // --- Constants for Styling ---
 const Color kPrimaryColor = Color(0xFF0B3D91);
@@ -202,6 +204,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
           ListTile(
+            leading: const Icon(Icons.account_circle),
+            title: const Text('Profile'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.devices_other_outlined),
+            title: const Text('Devices'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DevicesPage()),
+              );
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.admin_panel_settings),
             title: const Text('Admin Dashboard'),
             onTap: () {
@@ -309,7 +333,6 @@ class HomePageContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const Text('Note', style: kNoteTitleStyle),
-            // --- MODIFICATION: Updated the instructional text ---
             const Text(
               'Tapping the SOS button immediately calls your primary emergency contact.',
               style: kNoteBodyStyle,
@@ -319,7 +342,6 @@ class HomePageContent extends StatelessWidget {
               child: Tooltip(
                 message: 'Tap to call for help',
                 child: GestureDetector(
-                  // --- MODIFICATION: Changed back to onTap ---
                   onTap: state._triggerSosCalls,
                   child: CustomPaint(
                     painter: SosRipplePainter(state._sosRippleController),
