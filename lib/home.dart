@@ -309,28 +309,33 @@ class HomePageContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const Text('Note', style: kNoteTitleStyle),
+            // --- MODIFICATION: Updated the instructional text ---
             const Text(
               'Tapping the SOS button immediately calls your primary emergency contact.',
               style: kNoteBodyStyle,
             ),
             const SizedBox(height: 20),
             Center(
-              child: GestureDetector(
-                onTap: state._triggerSosCalls,
-                child: CustomPaint(
-                  painter: SosRipplePainter(state._sosRippleController),
-                  child: const SizedBox(
-                    width: 200,
-                    height: 200,
-                    child: Center(
-                      child: CircleAvatar(
-                        radius: 45,
-                        backgroundColor: Colors.red,
-                        child: Text('SOS',
-                            style: TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white)),
+              child: Tooltip(
+                message: 'Tap to call for help',
+                child: GestureDetector(
+                  // --- MODIFICATION: Changed back to onTap ---
+                  onTap: state._triggerSosCalls,
+                  child: CustomPaint(
+                    painter: SosRipplePainter(state._sosRippleController),
+                    child: const SizedBox(
+                      width: 200,
+                      height: 200,
+                      child: Center(
+                        child: CircleAvatar(
+                          radius: 45,
+                          backgroundColor: Colors.red,
+                          child: Text('SOS',
+                              style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
+                        ),
                       ),
                     ),
                   ),
@@ -424,7 +429,6 @@ class HomePageContent extends StatelessWidget {
   }
 }
 
-// --- MODIFICATION: New, smoother ripple painter ---
 class SosRipplePainter extends CustomPainter {
   final Animation<double> animation;
   final int rippleCount;

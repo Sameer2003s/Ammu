@@ -157,7 +157,6 @@ class _HeatwaveState extends State<Heatwave> {
   }
 }
 
-// --- THIS WIDGET IS UPDATED to show loading state ---
 class LocationSearchCard extends StatelessWidget {
   final TextEditingController controller;
   final Function(String) onSearch;
@@ -196,7 +195,6 @@ class LocationSearchCard extends StatelessWidget {
   }
 }
 
-// --- THIS WIDGET IS UNCHANGED ---
 class HeatRatioGauge extends StatelessWidget {
   final double value;
   final String location;
@@ -256,7 +254,6 @@ class HeatRatioGauge extends StatelessWidget {
   }
 }
 
-// This custom painter remains unchanged.
 class GaugePainter extends CustomPainter {
   final double value;
   final double maxValue = 250;
@@ -395,7 +392,6 @@ class GaugePainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
-// --- The rest of the file remains unchanged ---
 class NextHoursChart extends StatelessWidget {
   const NextHoursChart({super.key});
   @override

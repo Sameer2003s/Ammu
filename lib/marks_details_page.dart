@@ -161,7 +161,7 @@ class _MarksDetailsPageState extends State<MarksDetailsPage> {
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold)),
                                       ))
-                                  .toList(),
+                                  ,
                               const Divider(height: 30),
                               ListTile(
                                 title: const Text('Overall Percentage',

@@ -120,7 +120,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       ),
                     ],
                   ),
-                )).toList(),
+                )),
               ],
             ),
           ),
@@ -190,7 +190,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   ..._plans.map((plan) => Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: _buildPlanSelectionTile(plan),
-                  )).toList(),
+                  )),
                 ],
               ),
             ),

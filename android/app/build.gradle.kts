@@ -8,6 +8,12 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+// ============== START: MODIFICATION ==============
+// Import the necessary classes at the top of the file
+import java.util.Properties
+import java.io.FileInputStream
+// ============== END: MODIFICATION ==============
+
 android {
     namespace = "com.example.ammu"
     compileSdk = flutter.compileSdkVersion
@@ -22,20 +28,30 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
+    // ============== START: MODIFICATION ==============
+    // Define and load local.properties here, so it's visible to the blocks below
+    val localProperties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(FileInputStream(localPropertiesFile))
+    }
+    // ============== END: MODIFICATION ==============
+
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.ammu"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // ============== START: MODIFICATION ==============
+        // This line can now correctly find the 'localProperties' variable
+        manifestPlaceholders["MAPS_API_KEY"] = localProperties.getProperty("MAPS_API_KEY") ?: ""
+        // ============== END: MODIFICATION ==============
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }

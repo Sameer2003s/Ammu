@@ -10,7 +10,7 @@ class AppTheme {
     colorScheme: const ColorScheme.light(
       primary: primaryColor,
       secondary: accentColor,
-      background: Color(0xFFF4F6F8),
+      surface: Color(0xFFF4F6F8),
     ),
     scaffoldBackgroundColor: const Color(0xFFF4F6F8),
     appBarTheme: const AppBarTheme(

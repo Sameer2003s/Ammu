@@ -86,7 +86,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: _buildAppBar(),
       drawer: _buildDrawer(),
       body: SingleChildScrollView(
@@ -325,8 +325,8 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
                     height: 28,
                     child: OutlinedButton(
                       onPressed: () => _showIncidentDetails(record),
-                      child: const Text('View'),
                        style: OutlinedButton.styleFrom(side: BorderSide(color: Colors.grey.shade300), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+                      child: const Text('View'),
                     ),
                   )
                 ],

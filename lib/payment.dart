@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart'; // For payment gateway
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // Import dotenv
 import 'subscription.dart'; // To access the Plan class
 
 class PaymentScreen extends StatefulWidget {
-  // This now correctly accepts the plan from the previous screen.
   final Plan plan;
 
   const PaymentScreen({super.key, required this.plan});
@@ -22,7 +22,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     _razorpay = Razorpay();
-    // Set up event listeners for payment outcomes.
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
@@ -30,21 +29,26 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   void dispose() {
-    _razorpay.clear(); // Clear the Razorpay instance on dispose.
+    _razorpay.clear();
     super.dispose();
   }
 
-  // --- Payment Gateway Logic ---
-
-  /// Starts the payment process when the "Proceed" button is pressed.
   void _startPayment() {
-    // Extract the numeric price from the plan's price string (e.g., "₹199 / per month" -> 199)
     final priceString = widget.plan.price.replaceAll(RegExp(r'[^0-9]'), '');
     final amount = int.tryParse(priceString) ?? 0;
+    
+    // --- MODIFICATION: Load key from environment variables ---
+    final razorpayKey = dotenv.env['RAZORPAY_KEY_ID'];
+    if (razorpayKey == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error: Payment key is not configured.'), backgroundColor: Colors.red),
+      );
+      return;
+    }
 
     var options = {
-      'key': 'rzp_test_YOUR_KEY_HERE', // <-- IMPORTANT: Replace with your Razorpay test key
-      'amount': amount * 100, // Amount in the smallest currency unit (e.g., paise for INR)
+      'key': razorpayKey,
+      'amount': amount * 100,
       'name': 'Ammu App',
       'description': 'Purchase of ${widget.plan.name}',
       'prefill': {
@@ -60,12 +64,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
     }
   }
 
-  /// Handles a successful payment.
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     _updateUserSubscription();
   }
 
-  /// Handles a failed payment.
   void _handlePaymentError(PaymentFailureResponse response) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -75,12 +77,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
-  /// Handles redirection to an external wallet (like Google Pay).
   void _handleExternalWallet(ExternalWalletResponse response) {
     debugPrint('External Wallet Selected: ${response.walletName}');
   }
 
-  /// Updates the user's subscription in Firestore after a successful payment.
   Future<void> _updateUserSubscription() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -98,7 +98,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
             backgroundColor: Colors.green,
           ),
         );
-        // Pop back two screens to return to the home page.
         int count = 0;
         Navigator.of(context).popUntil((_) => count++ >= 2);
       }
@@ -111,7 +110,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
     }
   }
 
-  // --- UI Builder ---
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,7 +132,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
               style: TextStyle(fontSize: 16, color: Colors.black),
             ),
             const SizedBox(height: 16),
-            // The UI for selecting payment methods remains visually the same.
             _buildPaymentMethodCard(
               context,
               logoPath: 'assets/paytm.png',
@@ -183,7 +180,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                // The "Proceed" button now starts the payment flow.
                 onPressed: _startPayment,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF0D47A1),
