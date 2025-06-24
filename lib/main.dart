@@ -10,13 +10,13 @@ import 'home.dart'; // Import the HomePage
 void main() async {
   // Ensure that Flutter bindings are initialized
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize Firebase
   await Firebase.initializeApp();
-  
+
   // Load the environment variables from the .env file
   await dotenv.load(fileName: ".env");
-  
+
   runApp(const AmmuApp());
 }
 
@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen>
       parent: _controller,
       curve: const Interval(0.4, 1.0, curve: Curves.easeIn),
     );
-    
+
     Timer(const Duration(seconds: 2), () {
       if (mounted) {
         setState(() {
@@ -125,7 +125,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             const SizedBox(height: 20),
-            
+
             FadeTransition(
               opacity: _fadeAnimation,
               child: const Text(
@@ -139,28 +139,22 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             const SizedBox(height: 8),
-            
+
             FadeTransition(
               opacity: _fadeAnimation,
               child: const Text(
                 'Move with Mother Care',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white70,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.white70),
               ),
             ),
-            
+
             const SizedBox(height: 60),
-            
+
             _showLoading
                 ? const CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   )
-                : const SizedBox(
-                    height: 40,
-                    width: 40,
-                  ),
+                : const SizedBox(height: 40, width: 40),
           ],
         ),
       ),
